@@ -1,9 +1,7 @@
 $(document).ready(function () {
 
     // ============================= Variables ===================================================
-    // Wins
-    // Losses
-    // The start game function assigns random values to the crystal buttons and returns 
+    // 
     var numberWin;
     var userTotal = 0;
     var wins = 0;
@@ -11,19 +9,9 @@ $(document).ready(function () {
     // console.log(numberWin);
     console.log("userTotal FIRST RUN ---------->" + userTotal);
 
-    
     // ================================== Functions ===================================================
-    // Creates 4 buttons
-    // Put buttons in a div
-    // Assign each button a random number
-    // button clicked adds number to total
-    // Win or loss notification
-    // level reset
-    // RNG guess number 19-112
-    // RNG button numbers 1-12
-    // append number to data attribute
-
     // insert 4 buttons with random numbers between 1 and 12 assigned to the data attribute of the button
+    // add butt class so the buttons so that an on click event can be defined for all buttons
     function buttLoop() {
         for (var i = 0; i < 4; i++) {
             $("#buttons").append("<button id='crystal" + i + "'><img src='https://pixel.nymag.com/imgs/daily/grub/2016/06/06/06-guy-fieri.w700.h700.jpg' width='200px'></img></button>");
@@ -32,17 +20,23 @@ $(document).ready(function () {
         }
 
         $(".butt").click(function () {
-
+            // parse data-numval value 
             userTotal += parseInt($(this).attr("data-numval"));
+            $("#total").html("<h3>"+ userTotal +"</h3>")
             console.log("After Button Press userTotal ---------> " + userTotal);
-
+            // Win condition adds a win, resets all random numbers and resets the user total
             if (userTotal === numberWin) {
                 wins++;
+                $("#wins").html("<h3>"+ wins +"</h3>");
+                $("#message").html("<h3>You win!</h3>");
                 userTotal = 0;
                 startGame();
             }
+            // Loss condition same as win condition but for losses. No else function because we do not want an exit condition.
             if (userTotal > numberWin) {
                 losses++;
+                $("#losses").html("<h3>"+ losses +"</h3>");
+                $("#message").html("<h3>You lose!</h3>");
                 userTotal = 0;
                 startGame();
             }
@@ -53,8 +47,10 @@ $(document).ready(function () {
         $("#buttons").empty();
         buttLoop();
         numberWin = Math.floor((Math.random() * 120) + 20);
+        $("#goal").html("<h3>"+ numberWin +"</h3>");
+        $("#total").html("<h3>"+ userTotal +"</h3>")
         console.log("winNum " + numberWin);
     }
-
+    //Starts the game ;)
     startGame();
 });
